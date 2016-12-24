@@ -1,0 +1,15 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    app.city_manager:
+        class:        AppBundle\Service\CityManager
+        arguments:    
+            entityManager: "@doctrine.orm.entity_manager"
+
+    app.building_manager:
+        class:        AppBundle\Service\BuildingManager
+        arguments:    
+            entityManager: "@doctrine.orm.entity_manager"
