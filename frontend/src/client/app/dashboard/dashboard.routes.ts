@@ -7,6 +7,7 @@ import { TableRoutes } from './tables/index';
 import { FormRoutes } from './forms/index';
 import { GridRoutes } from './grid/index';
 import { BSComponentRoutes } from './bs-component/index';
+import { BuildingsRoutes } from './buildings/index';
 import { BSElementRoutes } from './bs-element/index';
 
 import { DashboardComponent } from './index';
@@ -23,7 +24,8 @@ export const DashboardRoutes: Route[] = [
 	    	...BlankPageRoutes,
         ...FormRoutes,
         ...GridRoutes,
-        ...BSElementRoutes
+        ...BSElementRoutes,
+        ...BuildingsRoutes
     	]
   	}
 ];
