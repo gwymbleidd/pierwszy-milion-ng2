@@ -14,14 +14,4 @@ import { InterceptorService } from 'ng2-interceptors';
 export class DashboardComponent {
 	constructor (private _http: InterceptorService) {
 	}
-
-	public test() {
-		var body = {
-			id: 'test'
-		}
-		this._http.get('/building/list', {})
-		    .map(res => res.json())
-		    .subscribe(
-		    );
-	}
 }

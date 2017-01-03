@@ -3,15 +3,13 @@
 </button>
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive}">
     <ul class="list-group">
-        <a>
-            TUTAJ: {{ credentials | json }}
-        </a>
         <a routerLink="/dashboard/home" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-dashboard"></i> Dashboard
         </a>
-        <a [routerLink]="['chart']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-bar-chart-o"></i> Charts
+        <a routerLink="/dashboard/buildings" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-building-o"></i> Budynki
         </a>
+    <!--
         <a [routerLink]="['tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-table"></i> Tables
         </a>
@@ -47,6 +45,6 @@
         </a>
         <a class="list-group-item more-themes" href="http://www.strapui.com/" >
             More Themes
-        </a>
+        </a> -->
     </ul>
 </nav>
