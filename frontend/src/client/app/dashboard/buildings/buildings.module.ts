@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {DataTableModule,SharedModule, DialogModule, ButtonModule} from 'primeng/primeng';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule }  from '@angular/platform-browser';
 
 import { BuildingsComponent } from './buildings.component';
 
 @NgModule({
-    imports: [RouterModule],
+    imports: [RouterModule, DataTableModule, FormsModule, BrowserModule, DialogModule, ButtonModule],
     declarations: [BuildingsComponent],
     exports: [BuildingsComponent]
 })

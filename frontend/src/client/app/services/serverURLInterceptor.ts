@@ -16,7 +16,6 @@ export class ServerURLInterceptor implements Interceptor {
 	}
 
     public interceptBefore(request: InterceptedRequest): InterceptedRequest {
-        console.log(this._globalState.state)
         if (this.unprotectedUrls.indexOf(request.options.url) == -1 && this._globalState.state.credentials) {
             request.options.url += '?access_token=' + this._globalState.state.credentials.access_token;
         }

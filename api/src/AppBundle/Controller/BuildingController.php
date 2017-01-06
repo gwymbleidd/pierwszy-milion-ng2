@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use JMS\Parser;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerBuilder;
 use AppBundle\Entity\Building;
