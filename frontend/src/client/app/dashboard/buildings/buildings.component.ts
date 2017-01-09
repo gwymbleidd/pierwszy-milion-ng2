@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { InterceptorService } from 'ng2-interceptors';
-import {DataTableModule,SharedModule} from 'primeng/primeng';
-import {URLSearchParams, QueryEncoder} from '@angular/http';
+import {DataTableModule,SharedModule,ConfirmationService} from 'primeng/primeng';
+import {URLSearchParams, QueryEncoder,RequestOptions, Request, RequestMethod} from '@angular/http';
 
 @Component({
 	moduleId: module.id,
@@ -19,7 +19,7 @@ export class BuildingsComponent {
     building: Building = new Building();
     selectedBuilding: Building;
 
-	constructor (private _http: InterceptorService) {
+	constructor (private _http: InterceptorService, private _confirmationService: ConfirmationService) {
 	}
 
     loadBuildingsLazy(event: LazyLoadEvent) {
@@ -49,26 +49,69 @@ export class BuildingsComponent {
     }
     
     save() {
-    	console.log(this.building);
-        if(this.newBuilding)
-            this.buildings.push(this.building);
-        else
-            this.buildings[this.findSelectedBuildingIndex()] = this.building;
-        
-        this.building = null;
-        this.displayDialog = false;
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        var body = JSON.stringify(this.building);
+        if(this.newBuilding) {
+          this._http.post('/building', body, {
+            headers: headers
+            })
+            .map(res => res.json())
+            .subscribe(
+              data => {
+                this.building.id = data.data;
+                this.displayDialog = false;
+                this.buildings.push(this.building);
+              },
+              err => console.log(err)
+            );
+        }
+        else {
+            this._confirmationService.confirm({
+                message: 'Are you sure that you want to perform this action?',
+                accept: () => {
+                    this._http.put('/building/' + this.building.id, body, {
+                        headers: headers
+                    })
+                    .map(res => res.json())
+                    .subscribe(
+                        data => { 
+                            this.buildings[this.findSelectedBuildingIndex()] = this.building;
+                            this.building = null;
+                            this.displayDialog = false;
+
+                        },
+                        err => console.log(err)
+                    );
+                }
+            });
+        }
     }
     
     delete() {
-        this.buildings.splice(this.findSelectedBuildingIndex(), 1);
-        this.building = null;
-        this.displayDialog = false;
+        this._confirmationService.confirm({
+            message: 'Are you sure that you want to perform this action?',
+            accept: () => {
+                this._http.delete('/building/' + this.building.id)
+                .map(res => res.json())
+                .subscribe(
+                    data => { 
+                        this.building = null;
+                        this.displayDialog = false;
+                        this.buildings.splice(this.findSelectedBuildingIndex(), 1);
+                    },
+                    err => console.log(err)
+                );
+            }
+        });
+
     }    
     
     onRowSelect(event) {
         this.newBuilding = false;
         this.building = this.cloneBuilding(event.data);
         this.displayDialog = true;
+        this.selectedBuilding = this.building;
     }
     
     cloneBuilding(b: Building): Building {
@@ -80,7 +123,14 @@ export class BuildingsComponent {
     }
     
     findSelectedBuildingIndex(): number {
-        return this.buildings.indexOf(this.selectedBuilding);
+        if (this.selectedBuilding) {
+            for (let i in this.buildings) {
+               if (this.buildings[i].id === this.selectedBuilding.id) {
+                   return i;
+               }
+            }
+        }
+        return -1;
     }
 }
 

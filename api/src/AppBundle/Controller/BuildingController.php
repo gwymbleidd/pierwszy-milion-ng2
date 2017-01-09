@@ -82,13 +82,13 @@ class BuildingController extends JsonController
 
         $requestData = json_decode($request->getContent(), true);
         try {
-            $this->get('app.building_manager')->createBuilding($requestData);
+            $id = $this->get('app.building_manager')->createBuilding($requestData);
 
         } catch(Exception $e) {
             return $this->JsonFail('Wystąpił błąd');
         }
 
-        return $this->JsonSuccess("Dodano budynek");
+        return $this->JsonData($id);
     }
 
     /**

@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { InterceptorService } from 'ng2-interceptors';
 import { GlobalStateService } from './../globalstate.service';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 import { 
   ROUTER_DIRECTIVES, 
   RouteConfig, 
@@ -34,6 +35,8 @@ export class LoginService {
 	handleSuccess(data) {
 		this._globalState.state.credentials.access_token = data.access_token;
 		this._globalState.state.credentials.refresh_token = data.access_token;
+		Cookie.set('access_token', data.access_token);
+		Cookie.set('refresh_token', data.access_token);
 		this._globalState.login();
         this._location.replaceState('/');
         this._router.navigate(['dashboard/home']);

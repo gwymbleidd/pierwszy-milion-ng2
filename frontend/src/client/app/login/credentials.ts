@@ -1,5 +1,5 @@
 export interface ICredentials {
-	access_token: string;
+	access_token: {};
 	role: string;
 	username: string;
 	password: string;
