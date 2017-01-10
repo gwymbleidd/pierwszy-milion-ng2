@@ -1,6 +1,8 @@
 import { Injectable, Component } from '@angular/core'
 import { Interceptor, InterceptedRequest, InterceptedResponse } from 'ng2-interceptors';
 import { GlobalStateService } from './../globalstate.service';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
+
 import { 
   ROUTER_DIRECTIVES, 
   RouteConfig, 
@@ -16,7 +18,9 @@ export class ServerURLInterceptor implements Interceptor {
 	}
 
     public interceptBefore(request: InterceptedRequest): InterceptedRequest {
-        console.log(this._globalState.state)
+        if (this._globalState.state.credentials.access_token == null ) {
+            this._globalState.state.credentials.access_token = Cookie.get('access_token');
+        }
         if (this.unprotectedUrls.indexOf(request.options.url) == -1 && this._globalState.state.credentials) {
             request.options.url += '?access_token=' + this._globalState.state.credentials.access_token;
         }

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use JMS\Parser;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\SerializerBuilder;
 use AppBundle\Entity\Building;
@@ -81,13 +82,13 @@ class BuildingController extends JsonController
 
         $requestData = json_decode($request->getContent(), true);
         try {
-            $this->get('app.building_manager')->createBuilding($requestData);
+            $id = $this->get('app.building_manager')->createBuilding($requestData);
 
         } catch(Exception $e) {
             return $this->JsonFail('Wystąpił błąd');
         }
 
-        return $this->JsonSuccess("Dodano budynek");
+        return $this->JsonData($id);
     }
 
     /**

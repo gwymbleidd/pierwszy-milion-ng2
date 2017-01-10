@@ -1,2 +1,44 @@
+<p-dataTable [value]="buildings" [lazy]="true" [rows]="10" [paginator]="true" 
+            [totalRecords]="totalRecords" (onLazyLoad)="loadBuildingsLazy($event)"
+            selectionMode="single" [(selection)]="selectedBuilding" (onRowSelect)="onRowSelect($event)" #dt>
+    <header>Lista budynków</header>
+    <p-column field="name" header="Nazwa" [sortable]="true"></p-column>
+    <p-column field="price" header="Cena" [sortable]="true"></p-column>
+    <p-column field="width" header="Szerokość" [sortable]="true"></p-column>
+    <p-column field="height" header="Wysokość" [sortable]="true"></p-column>
+    <footer>
+    	<div class="ui-helper-clearfix" style="width:100%">
+    		<button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Add"></button>
+    	</div>
+    </footer>
 
-		<button class="btn rounded-btn" (click)="test()"> Log in </button>
+</p-dataTable>
+
+<p-dialog header="Szczegóły" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="building">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="name">Nazwa</label></div>
+            <div class="ui-grid-col-8"><input pInputText style ="color:black" id="name" [(ngModel)]="building.name" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="price">Cena</label></div>
+            <div class="ui-grid-col-8"><input pInputText style ="color:black" id="price" [(ngModel)]="building.price" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="width">Szerokość</label></div>
+            <div class="ui-grid-col-8"><input pInputText style ="color:black" id="width" [(ngModel)]="building.width" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="height">Wysokość</label></div>
+            <div class="ui-grid-col-8"><input pInputText style ="color:black" id="height" [(ngModel)]="building.height" /></div>
+        </div>
+    </div>
+    <footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" pButton icon="fa-close" (click)="delete()" label="Delete"></button>
+            <button type="button" pButton icon="fa-check" (click)="save()" label="Save"></button>
+        </div>
+    </footer>
+</p-dialog>
+
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425"></p-confirmDialog>

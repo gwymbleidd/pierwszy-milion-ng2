@@ -22,6 +22,7 @@ class BuildingManager {
         $building->setPrice($requestData['price']);
         $this->em->persist($building);
         $this->em->flush();
+        return $building->getId();
     }
 
     public function updateBuilding($requestData, $id) {

@@ -8,6 +8,7 @@ import { FormRoutes } from './forms/index';
 import { GridRoutes } from './grid/index';
 import { BSComponentRoutes } from './bs-component/index';
 import { BuildingsRoutes } from './buildings/index';
+import { CitiesRoutes } from './cities/index';
 import { BSElementRoutes } from './bs-element/index';
 
 import { DashboardComponent } from './index';
@@ -25,7 +26,8 @@ export const DashboardRoutes: Route[] = [
         ...FormRoutes,
         ...GridRoutes,
         ...BSElementRoutes,
-        ...BuildingsRoutes
-    	]
+        ...BuildingsRoutes,
+        ...CitiesRoutes
+    	],
   	}
 ];
