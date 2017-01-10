@@ -1,6 +1,6 @@
 <p-dataTable [value]="buildings" [lazy]="true" [rows]="10" [paginator]="true" 
             [totalRecords]="totalRecords" (onLazyLoad)="loadBuildingsLazy($event)"
-            selectionMode="single" [(selection)]="selectedCar" (onRowSelect)="onRowSelect($event)" #dt>
+            selectionMode="single" [(selection)]="selectedBuilding" (onRowSelect)="onRowSelect($event)" #dt>
     <header>Lista budynków</header>
     <p-column field="name" header="Nazwa" [sortable]="true"></p-column>
     <p-column field="price" header="Cena" [sortable]="true"></p-column>

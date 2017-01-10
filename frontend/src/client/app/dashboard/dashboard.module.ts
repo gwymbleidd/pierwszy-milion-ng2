@@ -9,6 +9,7 @@ import { ChartModule } from './charts/chart.module';
 import { BlankPageModule } from './blank-page/blankPage.module';
 import { TableModule } from './tables/table.module';
 import { BuildingsModule } from './buildings/buildings.module';
+import { CitiesModule } from './cities/cities.module';
 import { FormModule } from './forms/forms.module';
 import { GridModule } from './grid/grid.module';
 import { BSComponentModule } from './bs-component/bsComponent.module';
@@ -25,6 +26,7 @@ import {SidebarComponent} from '../shared/index';
         CommonModule,
     	RouterModule,
         BuildingsModule,
+        CitiesModule,
     	DropdownModule,
         ModalModule,
     	HomeModule,

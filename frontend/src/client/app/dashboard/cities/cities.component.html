@@ -1,0 +1,78 @@
+<p-dataTable [value]="cities" expandableRows="true" [lazy]="true" [rows]="10" [paginator]="true" 
+            [totalRecords]="totalRecords" (onLazyLoad)="loadCitiesLazy($event)"
+            selectionMode="single" [(selection)]="selectedCity" #dt>
+    <header>Lista miast</header>
+    <p-column expander="true" styleClass="col-icon"></p-column>
+    <p-column field="name" header="Nazwa" [sortable]="true"></p-column>
+    <p-column field="start_date" header="Start" [sortable]="true" ></p-column>
+    <p-column field="end_date" header="Koniec" [sortable]="true"></p-column>
+    <p-column field="cityconfig.id" header="Kodd" [hidden]="true"></p-column>
+
+    <template let-city pTemplate="rowexpansion">
+        <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px;padding:20px">
+            <div class="ui-grid-row">
+                <div class="ui-grid-col-9">
+                    <div class="ui-grid ui-grid-responsive ui-grid-pad">
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6">Limit użytkowników: </div>
+                            <div class="ui-grid-col-6">{{city.cityconfig.id}}</div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6">Szerokość: </div>
+                            <div class="ui-grid-col-6">{{city.cityconfig.width}}</div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6">Wysokość: </div>
+                            <div class="ui-grid-col-6">{{city.cityconfig.height}}</div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6">Początek: </div>
+                            <div class="ui-grid-col-6">{{city.cityconfig.starting_map_area}}</div>
+                        </div>
+                        <div class="ui-grid-row">
+                            <div class="ui-grid-col-6">Cena początkowa: </div>
+                            <div class="ui-grid-col-6">{{city.cityconfig.field_start_price}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+	<footer>
+    	<div class="ui-helper-clearfix" style="width:100%">
+    		<button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Dodaj"></button>
+    	</div>
+    </footer>
+
+</p-dataTable>
+
+<p-dialog header="Dodawanie miasta" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="city">
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="name">Nazwa</label></div>
+            <div class="ui-grid-col-8"><input pInputText style ="color:black" id="name" [(ngModel)]="city.name" /></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="start_date">Start</label></div>
+            <div class="ui-grid-col-8"><p-calendar [showtime]="true" [(ngModel)]="city.start_date">{{city.start_date}}</p-calendar></div>
+        </div>
+        <div class="ui-grid-row">
+            <div class="ui-grid-col-4"><label for="end_date">Koniec</label></div>
+            <div class="ui-grid-col-8"><p-calendar [showtime]="true" [(ngModel)]="city.end_date">{{city.end_date}}</p-calendar></div>
+        </div>
+        <div class="ui-grid-row">
+            <!-- <div class="ui-grid-col-4"><label for="cityconfig.id">Konfiguracja</label></div> -->
+            <!-- <div class="ui-grid-col-8"><input pInputText style ="color:black" id="config_id" [(ngModel)]="city.cityconfig.id" /></div> -->
+        </div>
+
+    </div>
+    <footer>
+        <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+            <button type="button" pButton icon="fa-close" (click)="decline()" label="Anuluj"></button>
+            <button type="button" pButton icon="fa-check" (click)="save()" label="Zapisz"></button>
+        </div>
+    </footer>
+</p-dialog>
+
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle" width="425"></p-confirmDialog>
